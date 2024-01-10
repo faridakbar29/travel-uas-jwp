@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update My Travels</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form action="#" th:action="@{/mytravels}" th:object="${mytravel}" method="post">
+        <table>
+            <tr>
+                <td><label for="travelId">Travel Id</label></td>
+                <td><input type="text" th:field="*{travelId}" id="travelId" placeholder="Travel Id"></td>
+            </tr>
+            <tr>
+                <td><label for="travelName">Full name</label></td>
+                <td>
+                    <input type="text" th:field="*{travelName}" id="travelName" placeholder="Travel name">
+                    <td th:if="${#fields.hasErrors('travelName')}" th:errors="*{travelName}" class="error"></td>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="travelSchedule">Travel Schedule</label></td>
+                <td>
+                    <input type="date" th:field="*{travelSchedule}" id="travelSchedule" placeholder="Travel Schedule">
+                    <td th:if="${#fields.hasErrors('travelSchedule')}" th:errors="*{travelSchedule}" class="error"></td>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="route">Route</label></td>
+                <td><input type="text" th:field="*{route}" id="route" placeholder="Route"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Update Travel">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" th:if="${#fields.hasErrors('global')}">
+                    <h3>Errors:</h3>
+                    <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error"></p>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

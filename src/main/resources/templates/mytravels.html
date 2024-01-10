@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Travels Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            padding: 8px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div th:switch="${mytravels}">
+            <div th:case="*">
+                <h2>My Travels Information</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Travel ID</th>
+                            <th>Travel Name</th>
+                            <th>Travel Schedule</th>
+                            <th>Route</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="mytravel : ${mytravels}">
+                            <td th:text="${mytravel.travelId}"></td>
+                            <td th:text="${mytravel.travelName}"></td>
+                            <td th:text="${#dates.format(mytravel.travelSchedule, 'dd-MMM-yyyy')}"></td>
+                            <td th:text="${mytravel.route}"></td>
+                            <td><a th:href="@{/mytravels/edit/{travelId}(travelId=${mytravel.travelId})}">Edit</a></td>
+                            <td><a th:href="@{/mytravels/{travelId}/delete(travelId=${mytravel.travelId})}">Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p><a href="/signup-mytravels">Add a new student</a></p>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+</body>
+</html>
